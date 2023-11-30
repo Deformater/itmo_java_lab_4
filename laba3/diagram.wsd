@@ -1,0 +1,140 @@
+@startuml name
+title Sequence Diagram for laba3 package
+skinparam componentStyle uml2
+
+enum Books {
+    WAR_AND_PEACE
+    CRIME_AND_PUNISHMENT
+    THE_IDIOT
+    THE_BROTHERS_KARAMAZOV
+}
+
+enum Skills {
+    TRUMPET
+    COOKING
+    WRITING
+    READING
+}
+
+abstract class Person {
+    -String name
+    -List<Skills> skills
+    +Person(String, List<Skills>)
+    +getSkills(): List<Skills>
+    +setSkills(List<Skills>)
+    +addSkills(List<Skills>)
+    +getName(): String
+    +setName(String)
+    +getEmail(): String
+    +toString(): String
+    +equals(Object): boolean
+    +hashCode(): int
+}
+
+class Dostoevskiy {
+    -List<Books> books
+    +Dostoevskiy()
+    +getBooks(): List<Books>
+    +setBooks(List<Books>)
+    +addBooks(List<Books>)
+    +toString(): String
+    +equals(Object): boolean
+    +hashCode(): int
+}
+
+class Kaktus {
+    -List<Person> readers
+    -List<Person> fans
+    +Kaktus()
+    +fanOf(): List<Person>
+    +readerOf(): List<Person>
+    +toString(): String
+    +equals(Object): boolean
+    +hashCode(): int
+}
+
+class Lopushok {
+    -List<Person> readerOfList
+    +Lopushok()
+    +readerOf(): List<Person>
+    +toString(): String
+}
+
+class Truhti {
+    -List<Person> readerOfList
+    +Truhti()
+    +readerOf(): List<Person>
+    +toString(): String
+}
+
+class Buzoni {
+    -List<Person> readerOfList
+    +Buzoni()
+    +readerOf(): List<Person>
+    +toString(): String
+}
+
+abstract class Letter {
+    -String text
+    -Person to
+    -List<Person> from
+    .. Inner Class ..
+    - String location
+    - String city
+    - String street
+    - Integer houseNum
+    - Integer flatNum
+    +Address(String) throws AddressValueException
+    +setLocation(String)
+    +getLocation(): String
+    +toString(): String
+    ....
+    +Letter(String, List<Person>, Person)
+    +Letter(String, List<Person>, Person, String)
+    +Send(): String
+    +getText(): String
+    +setText(String)
+    +toString(): String
+    +equals(Object): boolean
+    +hashCode(): int
+}
+
+class Email {
+    +Email(String, Person, Person)
+    +Email(String, Person, Person, Location)
+    +Send(): String
+}
+
+interface Reader {
+    +readerOf(): List<Person>
+    +addWriter(Person)
+}
+
+interface Writer {
+    +writerOf(): List<Books>
+    +addBooks(List<Books>)
+}
+
+interface Fan {
+    +fanOf(): List<Person>
+    +addIdols(List<Person>)
+}
+
+Letter-->Email: Inherits
+Person->Skills: Uses
+Person --> Dostoevskiy: Inherits
+Person-->Kaktus: Inherits
+Person-->Truhti: Inherits
+Person-->Lopushok: Inherits
+Person-->Buzoni: Inherits
+
+
+Dostoevskiy->Books: Uses
+Writer --> Dostoevskiy: Implements
+Reader --> Truhti: Implements
+Reader --> Lopushok: Implements
+Reader --> Buzoni: Implements
+Kaktus->Dostoevskiy: Uses
+Fan --> Kaktus:Implements
+Reader --> Kaktus: Implements
+@enduml
