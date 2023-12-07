@@ -19,6 +19,10 @@ public class Email extends Letter {
             return String.format("From: %s\nTo: %s\nText: %s", this.from.get(0).getEmail(), this.to.getEmail(),
                     this.text);
         }
+        // String[] emailArr = new String[this.from.size()];
+        // for (Person p: from){
+        //     emailArr[this.from.indexOf(p)] = 
+        // }
         return String.format("From: %s\nTo: %s\nText: %s\nAddress %s", this.from.get(0).getEmail(), this.to.getEmail(),
                 this.text, this.address);
     }

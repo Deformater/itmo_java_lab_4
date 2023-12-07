@@ -74,6 +74,17 @@ class Buzoni {
     +toString(): String
 }
 
+class AddressValueException {
+    +AddressValueException(String[])
+    +getMessage(): String
+}
+
+class SameSenderAndRecieverException {
+    +SameSenderAndRecieverException(List<Person>, Person)
+    +getMessage(): String
+
+}
+
 abstract class Letter {
     -String text
     -Person to

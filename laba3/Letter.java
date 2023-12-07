@@ -19,7 +19,7 @@ abstract class Letter {
         public Address(String location) throws AddressValueException {
             String[] locationArr = location.split(", ");
             if (locationArr.length != 2 && locationArr.length != 3) {
-                throw new AddressValueException("Address must be in format: \"Street, House number, flat number\" or \"Street, House number\"");
+                throw new AddressValueException(locationArr);
             }
 
             this.location = location;
@@ -31,7 +31,7 @@ abstract class Letter {
                     this.flatNum = Integer.parseInt(locationArr[2]);
                 }
             } catch (NumberFormatException e) {
-                throw new AddressValueException("House number and flat number must be integer");
+                throw new AddressValueException(locationArr);
             }
         }
 
@@ -52,15 +52,29 @@ abstract class Letter {
         }
     }
 
+
     public Letter(String text, List<Person> from, Person to) {
         this.text = text;
         this.to = to;
         this.from = from;
+        this.checkSendersAndReciever();
     }
 
-    public Letter(String text, List<Person> from, Person to, String location) {
+    public Letter(String text, List<Person> from, Person to, String location){
         this(text, from, to);
-        this.address = new Address(location);
+        try {
+            this.address = new Address(location);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void checkSendersAndReciever() throws SameSenderAndRecieverException{
+        for (Person p: this.from) {
+            if (p == to){
+                throw new SameSenderAndRecieverException(from, to);
+            }
+        }
     }
 
     public abstract String send();
